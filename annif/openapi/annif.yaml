@@ -142,7 +142,7 @@ paths:
       operationId: annif.rest.detect_language
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -152,6 +152,7 @@ paths:
                 text:
                   type: string
                   description: input text
+                  example: A quick brown fox jumped over the lazy dog.
                 candidates:
                   type: array
                   description: candidate languages as ISO 639-1 codes
@@ -159,6 +160,7 @@ paths:
                     type: string
                     maxLength: 2
                     minLength: 2
+                    example: en
         required: true
       responses:
         200:
