@@ -2,6 +2,7 @@
 methods defined in the Swagger specification."""
 
 import connexion
+from simplemma.langdetect import lang_detector
 
 import annif.registry
 from annif.corpus import Document, DocumentList, SubjectSet
@@ -48,6 +49,18 @@ def show_project(project_id):
     except ValueError:
         return project_not_found_error(project_id)
     return project.dump()
+
+
+def detect_language(body):
+    """return scores for detected languages formatted according to Swagger spec"""
+
+    scores = lang_detector(body.get("text"), tuple(body.get("candidates")))
+    return {
+        "results": [
+            {"language": s[0] if s[0] != "unk" else None, "score": s[1]}
+            for s in scores
+        ]
+    }
 
 
 def _suggestion_to_dict(suggestion, subject_index, language):
