@@ -4,10 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from simplemma import LanguageDetector
-
 import annif
-import annif.langsupport
+import annif.simplemma_util
 
 from . import transform
 
@@ -31,9 +29,8 @@ class LangFilter(transform.BaseTransform):
         self.text_min_length = int(text_min_length)
         self.sentence_min_length = int(sentence_min_length)
         self.min_ratio = float(min_ratio)
-        self.language_detector = LanguageDetector(
-            self.project.language,
-            lemmatization_strategy=annif.langsupport.lemmatization_strategy,
+        self.language_detector = annif.simplemma_util.get_language_detector(
+            self.project.language
         )
 
     def transform_fn(self, text: str) -> str:
