@@ -82,6 +82,7 @@ jobs:
         # For Python 3.9:
         if [[ ${{ matrix.python-version }} == '3.9' ]]; then
           poetry install -E "nn omikuji yake voikko stwfsa";
+          poetry run pip install tensorflow-cpu==2.16.*  # Workaround for Poetry's problem with bad metadata
         fi
         # For Python 3.10:
         if [[ ${{ matrix.python-version }} == '3.10' ]]; then
@@ -94,6 +95,7 @@ jobs:
           poetry install -E "nn fasttext yake stwfsa voikko spacy";
           # download the small English pretrained spaCy model needed by spacy analyzer
           poetry run python -m spacy download en_core_web_sm --upgrade-strategy only-if-needed
+          poetry run pip install tensorflow-cpu==2.16.*  # Workaround for Poetry's problem with bad metadata
         fi
         # For Python 3.12:
         if [[ ${{ matrix.python-version }} == '3.12' ]]; then
